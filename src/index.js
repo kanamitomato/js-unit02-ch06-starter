@@ -13,8 +13,8 @@ const validate = (params) => {
   const username = params.username;
   const mailValidator = new MailValidator(email);
   const passwordValidator = new PasswordValidator(password);
-  const nameValidator = new NameValidator(name)
-  const usernameValidator = new UsernameValidator(username)
+  const nameValidator = new NameValidator(name);
+  const usernameValidator = new UsernameValidator(username);
   return Promise.all([
     nameValidator.validate(),
     usernameValidator.validate(),
@@ -68,13 +68,16 @@ const signup = (params) => {
 const onSubmit = async () => {
   await removeErrors()
   const params = {
-    email: 'メールアドレスの値',
-    password: 'パスワードの値',
+    name: '名前の値',
     username: 'ユーザー名の値',
-    name: '名前の値'
+    email: 'メールアドレスの値',
+    password: 'パスワードの値'
   }
   const results = await validate(params);
-  if (true /* バリデーション成功時 */) {
+  if (results[0].success &&
+      results[1].success &&
+      results[2].success &&
+      results[3].success ) {
     signup(params)
       .then((json) => {
         alert(json.message);
@@ -83,7 +86,9 @@ const onSubmit = async () => {
         alert(err.message);
       });
   } else {
-    /* エラーメッセージを出力 */
+    results.forEach((result) => {
+      if(!result.success)addErrorMessage(result.type, result.message);
+    })
   }
 }
 

@@ -12,8 +12,8 @@ export default class {
       } else {
         reject({
           success: false,
-          message: `${this.typeName}は必須です。`,
-          type: this.type
+          type: this.type,
+          message: `${this.typeName}は必須です。`
         })
       }
     });
