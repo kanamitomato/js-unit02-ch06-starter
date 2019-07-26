@@ -67,11 +67,15 @@ const signup = (params) => {
 
 const onSubmit = async () => {
   await removeErrors()
+  const name = document.getElementById('name')
+  const username = document.getElementById('username')
+  const email = document.getElementById('email')
+  const password = document.getElementById('password')
   const params = {
-    name: '名前の値',
-    username: 'ユーザー名の値',
-    email: 'メールアドレスの値',
-    password: 'パスワードの値'
+    name: name.value,
+    username: username.value,
+    email: email.value,
+    password: password.value
   }
   const results = await validate(params);
   if (results[0].success &&
